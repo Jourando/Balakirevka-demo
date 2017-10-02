@@ -34,23 +34,25 @@ var momentMask = new IMask(element, {
 });
 </script>
 <script>
+/*
 function clrInput1() {
 if (document.getElementById('validfrm').value.trim()=='') {document.getElementById('validfrm').value='2000/01/31 12:00';}
 }
 function clrInput2() {
 if (document.getElementById('validfrm').value.trim()=='2000/01/31 12:00') {document.getElementById('validfrm').value='';}
 }
-function substr( f_string, f_start, f_length ) {
+*/
+function substr(f_string, f_start, f_length) {
 	// +	 original by: Martijn Wieringa
 	if(f_start < 0) {f_start += f_string.length;}
 	if(f_length == undefined) {
-		f_length = f_string.length;
+		f_length=f_string.length;
 	} else if(f_length < 0){
-		f_length += f_string.length;
+		f_length+=f_string.length;
 	} else {
-		f_length += f_start;
+		f_length+=f_start;
 	}
-	if(f_length < f_start) {f_length = f_start;}
+	if(f_length<f_start) {f_length=f_start;}
 	return f_string.substring(f_start, f_length);
 }
 function isDigit(c, d, e) {
@@ -147,18 +149,20 @@ for (i=0; i<a.length; i++) {
 		else {b=b+''; console.log(b);}
 		if ((parseInt(a[14]+''+a[15]) < 0) || (parseInt(a[14]+''+a[15])>59)) {b=substr(b, 0, -2); console.log(a[14]+''+a[15])} // 0..59
 	}
-	
-		
 }
-document.getElementById('validfrm').value=b;
+document.getElementById('validfrm1').value=b;
+}
+function efnc() {
+return true;
 }
 // осталось добавить время
 </script>
 <form class="form">
               <div class="valform-item">
                 <label>Type here</label>
-                <input id="validfrm" type="text" value="" Onchange=rplc(this.value) OnKeyUp=rplc(this.value) onfocus=clrInput2() onblur=clrInput1()><input type=button value=Check>
-                <div class="desc">date: <span id="frmvalue">Sat May 06 1978 09:09:00 GMT+0300</span></div>
+<!--                <input id="validfrm1" type="text" value="2000/01/31 12:00" Onchange=rplc(this.value) OnKeyUp=rplc(this.value) onfocus=clrInput2() onblur=clrInput1()><input type=button value=Check> -->
+                <input id="validfrm1" type="text" value="2000/01/31 12:00" Onchange=rplc(this.value) OnKeyUp=rplc(this.value) onfocus="(this.value=='2000/01/31 12:00'?this.value='', efnc());" onblur="(this.value==''?this.value='2000/01/31 12:00', efnc());"><input type=button value=Check>
+                <div class="desc">date: <span id="frmvalue1">Sat May 06 1978 09:09:00 GMT+0300</span></div>
               </div>
 </form>
 <SCRIPT>
@@ -193,8 +197,8 @@ return b;
 <form class="form">
               <div class="valform-item">
                 <label>Type here</label>
-                <input id="validfrm" type="text" value="" onfocus=clrInput2() onblur=clrInput1()><input type=button value=Check Onclick="rplc2(document.getElementById('validfrm').value)"><label id=err>&nbsp;</label>
-                <div class="desc">date: <span id="frmvalue">Sat May 06 1978 09:09:00 GMT+0300</span></div>
+                <input id="validfrm2" type="text" placeholder="2000/01/31 12:00" value=""><input type=button value=Check Onclick="rplc2(document.getElementById('validfrm2').value)"><label id=err>&nbsp;</label>
+                <div class="desc">date: <span id="frmvalue2">Sat May 06 1978 09:09:00 GMT+0300</span></div>
               </div>
 </form>
 

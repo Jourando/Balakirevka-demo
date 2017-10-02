@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<HTML><HEAD>
+<TITLE>Test page - 12. Тест подсказок.</TITLE>
+<Meta charset="utf-8">
+<style>
+	input[type=text] {width: 180px;}
+   #floatTip {
+    position: absolute; z-index: 3; width: 250px; display: none; 
+    border: 1px solid #000; padding: 4px;
+    font-family: sans-serif; font-size: 9pt;
+    color: #333; background: #ffe5ff;
+   }
+   .inpdt1, .inpdt2 {
+    display: inline-block; /* Строчно-блочный элемент */
+    position: relative; /* Относительное позиционирование */
+   }
+   .inpdt1:hover::after {
+    content: attr(data-title); /* Выводим текст */
+    position: absolute; /* Абсолютное позиционирование */
+    left: 0; right: 0; bottom: 20px; /* Положение подсказки */
+    z-index: 1; /* Отображаем подсказку поверх других элементов */
+    background: rgba(0,42,167,0.6); /* Полупрозрачный цвет фона */
+    color: #fff; /* Цвет текста */
+    text-align: center; /* Выравнивание текста по центру */
+    font-family: Arial, sans-serif; /* Гарнитура шрифта */
+    font-size: 10px; /* Размер текста подсказки */
+    padding: 5px 10px; /* Поля */
+    border: 1px solid #333; /* Параметры рамки */
+   }
+   .inpdt2:hover::after {
+    content: attr(data-title); /* Выводим текст */
+    position: absolute; /* Абсолютное позиционирование */
+    left: 0; right: 0; bottom: 20px; /* Положение подсказки */
+    z-index: 1; /* Отображаем подсказку поверх других элементов */
+    background: rgb(0,42,167); /* Непрозрачный цвет фона */
+    color: #fff; /* Цвет текста */
+    text-align: center; /* Выравнивание текста по центру */
+    font-family: Arial, sans-serif; /* Гарнитура шрифта */
+    font-size: 10px; /* Размер текста подсказки */
+    padding: 5px 10px; /* Поля */
+    border: 1px solid #333; /* Параметры рамки */
+   }
+</style>
+<script>
+var Str1="Поле поддерживает ввод даты и времени в следующем формате:<ul><li>4-значный ввод года в диапазоне от 1990 до 2090</li><li>2-значный ввод месяца (если требуется ввести 2 месяц, то значение должно быть 02)</li><li>2-значный ввод числа (если требуется ввести 1 число, значение должно быть 01)</li><li>Дата от времени отделяется пробелом</li><li>2-значный ввод часов в диапазоне от 0 до 23</li><li>Двухзначный ввод минут в диапазоне от 0 до 59</li><li>Дата разделяется косой чертой - /, время - двоеточием. Например, 2000/01/01 12:01</li></ul>";
+document.onmousemove = moveTip;
+function moveTip(e) {
+  floatTipStyle = document.getElementById("floatTip").style;
+  w = 250; // Ширина подсказки
+
+  // Для браузера IE6-8
+  if (document.all)  { 
+    x = event.clientX + document.body.scrollLeft; 
+    y = event.clientY + document.body.scrollTop; 
+
+  // Для остальных браузеров
+  } else   { 
+    x = e.pageX; // Координата X курсора
+    y = e.pageY; // Координата Y курсора
+  }
+
+  // Показывать слой справа от курсора 
+  if ((x + w + 10) < document.body.clientWidth) { 
+    floatTipStyle.left = x + 'px';
+
+  // Показывать слой слева от курсора
+  } else { 
+    floatTipStyle.left = x - w + 'px';
+  }
+
+  // Положение от  верхнего края окна браузера
+  floatTipStyle.top = y + 20 + 'px';
+}
+
+function toolTip(msg) {
+  floatTipStyle = document.getElementById("floatTip").style;
+  if (msg) {
+    // Выводим текст подсказки
+    document.getElementById("floatTip").innerHTML = msg;
+    // Показываем подсказку
+    floatTipStyle.display = "block";
+  } else { 
+    // Прячем подсказку
+    floatTipStyle.display = "none";
+  } 
+}
+</Script>
+</HEAD>
+<BODY>
+<h4>Тест подсказок</h4>
+<p><input type=text name=datetime1 value="2000/01/01 12:00" onMouseOver="toolTip(Str1)" onMouseOut="toolTip()"></p>
+<div id="floatTip"></div>
+<br>
+<div class="inpdt1" data-title="Подсказка для заполнения: год должен быть в 4-значном формате, месяц и день - в двухзначном (например, 2000/01/01), часы и минуты вводятся в двухзначном формате от 0 до 23 для часов и от 0 до 59 для минут (например, 00:59)"><input type=text value="2000/01/01 12:00" name=datetime2></div>
+<br><p></p><br>
+<div class="inpdt2" data-title="Подсказка для заполнения: год должен быть в 4-значном формате, месяц и день - в двухзначном (например, 2000/01/01), часы и минуты вводятся в двухзначном формате от 0 до 23 для часов и от 0 до 59 для минут (например, 00:59)"><input type=text value="2000/01/01 12:00" name=datetime3></div>
+</BODY>
+</HTML>

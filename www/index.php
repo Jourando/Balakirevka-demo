@@ -1,5 +1,5 @@
 ﻿<?php
-// demo //
+// demo // ревизию не ставим
 $lines=file('demo.a');
 echo "<HTML lang='RU-ru'><HEAD><meta charset=\"utf-8\"><TITLE>INDEX</TITLE></HEAD><BODY>";
 echo "<h4>Список демо-файлов</h4>";

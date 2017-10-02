@@ -1,3 +1,8 @@
+﻿<HTML><HEAD>
+<TITLE>Test page - 10</TITLE>
+<Meta charset="utf-8">
+</HEAD>
+<BODY>
 <script src="l/imask.min.js"></script>
 <script src="l/moment_locales.js"></script>
 <form class="form">
@@ -34,14 +39,12 @@ var momentMask = new IMask(element, {
 });
 </script>
 <script>
-/*
-function clrInput1() {
-if (document.getElementById('validfrm').value.trim()=='') {document.getElementById('validfrm').value='2000/01/31 12:00';}
+function clrInput1(p) {
+if (p.trim()=='') {document.getElementById('validfrm1').value='2000/01/31 12:00';}
 }
-function clrInput2() {
-if (document.getElementById('validfrm').value.trim()=='2000/01/31 12:00') {document.getElementById('validfrm').value='';}
+function clrInput2(p) {
+if (p.trim()=='2000/01/31 12:00') {document.getElementById('validfrm1').value='';}
 }
-*/
 function substr(f_string, f_start, f_length) {
 	// +	 original by: Martijn Wieringa
 	if(f_start < 0) {f_start += f_string.length;}
@@ -161,7 +164,7 @@ return true;
               <div class="valform-item">
                 <label>Type here</label>
 <!--                <input id="validfrm1" type="text" value="2000/01/31 12:00" Onchange=rplc(this.value) OnKeyUp=rplc(this.value) onfocus=clrInput2() onblur=clrInput1()><input type=button value=Check> -->
-                <input id="validfrm1" type="text" value="2000/01/31 12:00" Onchange=rplc(this.value) OnKeyUp=rplc(this.value) onfocus="(this.value=='2000/01/31 12:00'?this.value='', efnc());" onblur="(this.value==''?this.value='2000/01/31 12:00', efnc());"><input type=button value=Check>
+                <input id="validfrm1" type="text" value="2000/01/31 12:00" Onchange=rplc(this.value) OnKeyUp=rplc(this.value) onfocus="clrInput2(this.value)" onblur="clrInput1(this.value)"><input type=button value=Check>
                 <div class="desc">date: <span id="frmvalue1">Sat May 06 1978 09:09:00 GMT+0300</span></div>
               </div>
 </form>
@@ -190,7 +193,7 @@ if (x.p1==false) {b=b+'Год написан с ошибкой<br>';}
 if (x.p2==false) {b=b+'Месяц написан с ошибкой<br>';}
 if (x.p3==false) {b=b+'День написан с ошибкой<br>';}
 if ((x.p4==false) || (x.p5==false)) {b=b+'Время написано с ошибкой';}
-if (b !== '') {document.getElementById('err').innerHTML='<div style="display: inline-block; width: 200px; box-shadow: grey 5px 3px; color: red; position: relative; top: 75px; left: 20px; z-index: 5; border: 1px double gray; background: lightyellow;">'+b+'<br><input type=button value=x onclick=mx() style="margin: 5px 75px; width: 40px"></div>';}
+if (b !== '') {document.getElementById('err').innerHTML='<div style="display: inline-block; width: 200px; box-shadow: grey 5px 3px; color: red; position: relative; top: 75px; left: 20px; z-index: 5; border: 1px double gray; background: lightyellow; padding: 5px"><h4 style="margin: 5px">Данные не отправлены:</h4>'+b+'<br><input type=button value=x onclick=mx() style="margin: 5px 75px; width: 40px"></div>';}
 return b;
 }
 </SCRIPT>
@@ -201,8 +204,6 @@ return b;
                 <div class="desc">date: <span id="frmvalue2">Sat May 06 1978 09:09:00 GMT+0300</span></div>
               </div>
 </form>
-
-
-
-
-
+<div>&nbsp;</div>
+</BODY>
+</HTML>

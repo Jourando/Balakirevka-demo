@@ -100,7 +100,7 @@ var momentMask = new IMask(element, {
   }
 });
 </script>
-<br>
+<br><p></p>
 <!-- Вар.2 -->
 <script>
 function clrInput1(p) {
@@ -216,16 +216,225 @@ document.getElementById('validfrm1').value=b;
 if (i==16) {document.getElementById('validfrm1').style.cssText="background-color: rgba(0, 200, 0, 0.5)";}
 else {document.getElementById('validfrm1').style.cssText="background-color: rgba(235, 235, 255, 0.5)";}
 }
-function efnc() {
-return true;
-}
 </script>
 <div class="inpx">2. <input type=text id=validfrm1 value="2000/01/01 12:00" name=datetime2 onMouseOver="toolTip(Str1)" onMouseOut="toolTip()" placeholder="2000/01/01 12:00" OnFocus="clrInput2(this.value)" OnBlur="clrInput1(this.value)" Onchange=rplc(this.value) OnKeyUp=rplc(this.value)></div>
-<br><p></p><br>
-<div class="inpdt2" data-title="Подсказка для заполнения: год должен быть в 4-значном формате, месяц и день - в двухзначном (например, 2000/01/01), часы и минуты вводятся в двухзначном формате от 0 до 23 для часов и от 0 до 59 для минут (например, 00:59)">3. <input type=text value="2000/01/01 12:00" name=datetime3></div>
-<br><p></p><br>
-<div style="position: relative;">4. <input type=text value="2000/01/01 12:00" onfocus="this.nextSibling.style.display = 'block';" onblur="this.nextSibling.style.display = 'none';"><div style="padding: 0 10px; background: #f99; display: none; position: absolute; left: 0px; top: 20px;">год должен быть в 4-значном формате,<br>месяц и день - в двухзначном (например, 2000/01/01),<br>часы и минуты вводятся в двухзначном формате от 0 до 23<br>для часов и от 0 до 59 для минут (например, 00:59)</div></div>
-<br><p></p><br>
-<div><input type=text value="2000/01/01 12:00" OnMouseOver="document.getElementById('hlpmsg').innerHTML='год должен быть в 4-значном формате, месяц и день - в двухзначном (например, 2000/01/01), часы и минуты вводятся в двухзначном формате от 0 до 23 для часов и от 0 до 59 для минут (например, 00:59)';" OnMouseOut="document.getElementById('hlpmsg').innerHTML='Help:';"><br><div id=hlpmsg>Help:</div></div>
+<br><p></p>
+<!-- Вар.3 -->
+<script>
+function clrInput3(p) {
+if (p.trim()=='') {document.getElementById('validfrm2').value='2000/01/01 12:00';}
+}
+function clrInput4(p) {
+if (p.trim()=='2000/01/01 12:00') {document.getElementById('validfrm2').value='';}
+}
+function substr(f_string, f_start, f_length) {
+	if(f_start < 0) {f_start += f_string.length;}
+	if(f_length == undefined) {f_length=f_string.length;}
+	else if(f_length < 0){f_length+=f_string.length;}
+	else {f_length+=f_start;}
+	if(f_length<f_start) {f_length=f_start;}
+	return f_string.substring(f_start, f_length);
+}
+function rplx(a) {
+var b='';
+for (i=0; i<a.length; i++) {
+	if (i<4) { 										// анализ 1х четырех символов
+		if (i==0) {
+			if (isDigit(a[i], 0, '')) {b=b+a[i];}	// первый 1 или 2
+			else {b='';}
+		} else {
+			if (i==1) {
+				if (isDigit(a[i], 1, a[i-1])) {b=b+a[i];} 										// если первый символ=1, то 9; если 1 символ=2, то 0
+				else {b=b+'';}
+			} else {
+				if ((i==2) && ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-'))) {		// если 3 символ - разделитель,
+					b='20'+b+'/';																// то подставить первые символы - 20, а в конце - разделитель /
+				} else {
+					if (isDigit(a[i], 2, '')) {b=b+a[i];}					 					// если не разделитель, то проверить, входит ли в 0..9
+					else {b=b+'';}
+				}
+			}
+		}
+	}
+	if (i==3) {b=b+'/';}							// если длина строки уже 4 символа, добавить разделитель /
+	if (i==5) {										// 6й символ - месяц
+		if (isDigit(a[i], 2, '')) {b=b+a[i];}		// значения от 0 до 9
+		else {b=b+'';}
+	}
+	if (i==6) {
+		if ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-')) { b=substr(b, 0, -1)+'0'+a[i-1]+'/'; } // если разделитель, подставить впереди 0, число, а сзади /
+		else {
+			if (a[i-1]==0) {
+				if (a[i]>0) { 									// если первая цифра 0, вторая должна быть > 0
+					if (isDigit(a[i], 2, '')) {b=b+a[i]+'/';}	// если впереди 0, принимаем любую цифру и сзади добавляем /
+					else {b=b+'';}
+				} else {b=b+'';}
+			}
+			if (a[i-1]==1) {
+				if (isDigit(a[i], 4, '')) {b=b+a[i]+'/';}		// если впереди 1, принимаем 0..2 и сзади добавляем /
+				else {b=b+'';}
+			}
+		}
+		if ((parseInt(a[5]+''+a[6]) < 1) || (parseInt(a[5]+''+a[6])>12)) {b=substr(b, 0, -1);}
+	}
+	if (i==8) { // любая цифра
+		if (isDigit(a[i], 2, '')) {b=b+a[i];}
+		else {b=b+'';}
+	}
+	if (i==9) { // если равно нулю, то разрешить только число, кроме 0! если больше нуля, то разрешить любое число... но сумма символов < 31, разрешить разделитель...
+		if (a[i-1]==0) {
+			if (isDigit(a[i], 3, '')) {b=b+a[i];}
+			else {b=b+'';}
+		} else {
+			if (isDigit(a[i], 2, '')) {b=b+a[i];}
+			else {
+				if ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-')) {b=substr(b, 0, -1)+'0'+a[i-1];} // если разделитель, подставить впереди 0, число
+				else {b=b+'';}
+			}
+		}
+		if ((parseInt(a[8]+''+a[9]) < 1) || (parseInt(a[8]+''+a[9])>31)) {b=substr(b, 0, -1);}
+	}
+	if (i==10) {b=b+' ';} // полюбому пробел
+	if (i==11) {
+		if (isDigit(a[i], 2, '')) {b=b+a[i];} // принимаем любую цифру/
+		else {b=b+'';}
+	}
+	if (i==12) {
+		if ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-')) {b=substr(b, 0, -1)+'0'+a[i-1]+':'; }
+		else {
+			if (isDigit(a[i], 2, '')) {b=b+a[i]+':'; }
+			else {b=b+'';}
+		}
+		if ((parseInt(a[11]+''+a[12]) < 0) || (parseInt(a[11]+''+a[12])>23)) {b=substr(b, 0, -2);} // 0..23
+	}
+	if (i==14) {
+		if (isDigit(a[i], 2, '')) {b=b+a[i];} // принимаем любую цифру/
+		else {b=b+'';}
+	}
+	if (i==15) {
+		if (isDigit(a[i], 2, '')) {b=b+a[i];} // принимаем любую цифру/
+		else {
+			if ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-')) {b=substr(b, 0, -1)+'0'+a[i-1];} // если разделитель, подставить впереди 0, число
+			else {b=b+'';}
+		}
+		if ((parseInt(a[14]+''+a[15]) < 0) || (parseInt(a[14]+''+a[15])>59)) {b=substr(b, 0, -2);} // 0..59
+	}
+}
+document.getElementById('validfrm2').value=b;
+if (i==16) {document.getElementById('validfrm2').style.cssText="background-color: rgba(0, 200, 0, 0.5)";}
+else {document.getElementById('validfrm2').style.cssText="background-color: rgba(235, 235, 255, 0.5)";}
+}
+</script>
+<br>
+<div class="inpdt2" data-title="Подсказка для заполнения: год должен быть в 4-значном формате, месяц и день - в двухзначном (например, 2000/01/01), часы и минуты вводятся в двухзначном формате от 0 до 23 для часов и от 0 до 59 для минут (например, 00:59)">3. <input type=text id=validfrm2 value="2000/01/01 12:00" name=datetime3 placeholder="2000/01/01 12:00" OnFocus="clrInput4(this.value)" OnBlur="clrInput3(this.value)" Onchange=rplx(this.value) OnKeyUp=rplx(this.value)></div>
+<br><p></p>
+<!-- Вар.3 -->
+<script>
+function clrInput5(p) {
+if (p.trim()=='') {document.getElementById('validfrm3').value='2000/01/01 12:00';}
+}
+function clrInput6(p) {
+if (p.trim()=='2000/01/01 12:00') {document.getElementById('validfrm3').value='';}
+}
+function substr(f_string, f_start, f_length) {
+	if(f_start < 0) {f_start += f_string.length;}
+	if(f_length == undefined) {f_length=f_string.length;}
+	else if(f_length < 0){f_length+=f_string.length;}
+	else {f_length+=f_start;}
+	if(f_length<f_start) {f_length=f_start;}
+	return f_string.substring(f_start, f_length);
+}
+function rply(a) {
+var b='';
+for (i=0; i<a.length; i++) {
+	if (i<4) { 										// анализ 1х четырех символов
+		if (i==0) {
+			if (isDigit(a[i], 0, '')) {b=b+a[i];}	// первый 1 или 2
+			else {b='';}
+		} else {
+			if (i==1) {
+				if (isDigit(a[i], 1, a[i-1])) {b=b+a[i];} 										// если первый символ=1, то 9; если 1 символ=2, то 0
+				else {b=b+'';}
+			} else {
+				if ((i==2) && ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-'))) {		// если 3 символ - разделитель,
+					b='20'+b+'/';																// то подставить первые символы - 20, а в конце - разделитель /
+				} else {
+					if (isDigit(a[i], 2, '')) {b=b+a[i];}					 					// если не разделитель, то проверить, входит ли в 0..9
+					else {b=b+'';}
+				}
+			}
+		}
+	}
+	if (i==3) {b=b+'/';}							// если длина строки уже 4 символа, добавить разделитель /
+	if (i==5) {										// 6й символ - месяц
+		if (isDigit(a[i], 2, '')) {b=b+a[i];}		// значения от 0 до 9
+		else {b=b+'';}
+	}
+	if (i==6) {
+		if ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-')) { b=substr(b, 0, -1)+'0'+a[i-1]+'/'; } // если разделитель, подставить впереди 0, число, а сзади /
+		else {
+			if (a[i-1]==0) {
+				if (a[i]>0) { 									// если первая цифра 0, вторая должна быть > 0
+					if (isDigit(a[i], 2, '')) {b=b+a[i]+'/';}	// если впереди 0, принимаем любую цифру и сзади добавляем /
+					else {b=b+'';}
+				} else {b=b+'';}
+			}
+			if (a[i-1]==1) {
+				if (isDigit(a[i], 4, '')) {b=b+a[i]+'/';}		// если впереди 1, принимаем 0..2 и сзади добавляем /
+				else {b=b+'';}
+			}
+		}
+		if ((parseInt(a[5]+''+a[6]) < 1) || (parseInt(a[5]+''+a[6])>12)) {b=substr(b, 0, -1);}
+	}
+	if (i==8) { // любая цифра
+		if (isDigit(a[i], 2, '')) {b=b+a[i];}
+		else {b=b+'';}
+	}
+	if (i==9) { // если равно нулю, то разрешить только число, кроме 0! если больше нуля, то разрешить любое число... но сумма символов < 31, разрешить разделитель...
+		if (a[i-1]==0) {
+			if (isDigit(a[i], 3, '')) {b=b+a[i];}
+			else {b=b+'';}
+		} else {
+			if (isDigit(a[i], 2, '')) {b=b+a[i];}
+			else {
+				if ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-')) {b=substr(b, 0, -1)+'0'+a[i-1];} // если разделитель, подставить впереди 0, число
+				else {b=b+'';}
+			}
+		}
+		if ((parseInt(a[8]+''+a[9]) < 1) || (parseInt(a[8]+''+a[9])>31)) {b=substr(b, 0, -1);}
+	}
+	if (i==10) {b=b+' ';} // полюбому пробел
+	if (i==11) {
+		if (isDigit(a[i], 2, '')) {b=b+a[i];}
+		else {b=b+'';}
+	}
+	if (i==12) {
+		if ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-')) {b=substr(b, 0, -1)+'0'+a[i-1]+':'; }
+		else {
+			if (isDigit(a[i], 2, '')) {b=b+a[i]+':'; }
+			else {b=b+'';}
+		}
+		if ((parseInt(a[11]+''+a[12]) < 0) || (parseInt(a[11]+''+a[12])>23)) {b=substr(b, 0, -2);} // 0..23
+	}
+	if (i==14) {
+		if (isDigit(a[i], 2, '')) {b=b+a[i];}
+		else {b=b+'';}
+	}
+	if (i==15) {
+		if (isDigit(a[i], 2, '')) {b=b+a[i];}
+		else {
+			if ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-')) {b=substr(b, 0, -1)+'0'+a[i-1];} // если разделитель, подставить впереди 0, число
+			else {b=b+'';}
+		}
+		if ((parseInt(a[14]+''+a[15]) < 0) || (parseInt(a[14]+''+a[15])>59)) {b=substr(b, 0, -2);} // 0..59
+	}
+}
+document.getElementById('validfrm3').value=b;
+if (i==16) {document.getElementById('validfrm3').style.cssText="background-color: rgba(0, 200, 0, 0.5)";}
+else {document.getElementById('validfrm3').style.cssText="background-color: rgba(235, 235, 255, 0.5)";}
+}
+</script>
+<br>
+<div style="position: relative;">4. <input type=text id=validfrm3 value="" name=datetime4 placeholder="2000/01/01 12:00" OnFocus="this.nextSibling.style.display='block'; clrInput6(this.value)" OnBlur="this.nextSibling.style.display='none'; clrInput5(this.value)" Onchange=rply(this.value) OnKeyUp=rply(this.value)><div style="padding: 0 10px; background: #f99; display: none; position: absolute; left: 0px; top: 20px;">год должен быть в 4-значном формате,<br>месяц и день - в двухзначном (например, 2000/01/01),<br>часы и минуты вводятся в двухзначном формате от 0 до 23<br>для часов и от 0 до 59 для минут (например, 00:59)</div></div>
 </BODY>
 </HTML>

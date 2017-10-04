@@ -217,7 +217,7 @@ if (i==16) {document.getElementById('validfrm1').style.cssText="background-color
 else {document.getElementById('validfrm1').style.cssText="background-color: rgba(235, 235, 255, 0.5)";}
 }
 </script>
-<div class="inpx">2. <input type=text id=validfrm1 value="2000/01/01 12:00" name=datetime2 onMouseOver="toolTip(Str1)" onMouseOut="toolTip()" placeholder="2000/01/01 12:00" OnFocus="clrInput2(this.value)" OnBlur="clrInput1(this.value)" Onchange=rplc(this.value) OnKeyUp=rplc(this.value)></div>
+<div class="inpx">2. <input type=text id=validfrm1 value="2000/01/01 12:00" name=datetime2 onMouseOver="toolTip(Str1)" onMouseOut="toolTip()" placeholder="2000/01/01 12:00" OnFocus="clrInput2(this.value)" OnBlur="clrInput1(this.value)" Onchange=rplc(this.value) OnKeyUp=rplc(this.value) maxlength=16></div>
 <br><p></p>
 <!-- Вар.3 -->
 <script>
@@ -430,11 +430,11 @@ for (i=0; i<a.length; i++) {
 	}
 }
 document.getElementById('validfrm3').value=b;
-if (i==16) {document.getElementById('validfrm3').style.cssText="background-color: rgba(0, 200, 0, 0.5)";}
+if (b.length==16) {document.getElementById('validfrm3').style.cssText="background-color: rgba(0, 200, 0, 0.5)";}
 else {document.getElementById('validfrm3').style.cssText="background-color: rgba(235, 235, 255, 0.5)";}
 }
 </script>
 <br>
-<div style="position: relative;">4. <input type=text id=validfrm3 value="" name=datetime4 placeholder="2000/01/01 12:00" OnFocus="this.nextSibling.style.display='block'; clrInput6(this.value)" OnBlur="this.nextSibling.style.display='none'; clrInput5(this.value)" Onchange=rply(this.value) OnKeyUp=rply(this.value)><div style="padding: 0 10px; background: #f99; display: none; position: absolute; left: 0px; top: 20px;">год должен быть в 4-значном формате,<br>месяц и день - в двухзначном (например, 2000/01/01),<br>часы и минуты вводятся в двухзначном формате от 0 до 23<br>для часов и от 0 до 59 для минут (например, 00:59)</div></div>
+<div style="position: relative;">4. <input type=text id=validfrm3 value="" name=datetime4 placeholder="2000/01/01 12:00" OnFocus="this.nextSibling.style.display='block'; clrInput6(this.value)" OnBlur="this.nextSibling.style.display='none'; clrInput5(this.value)" Onchange="rply(this.value)" OnKeyUp="rply(this.value)" maxlength=16><div style="padding: 0 10px; background: #f99; display: none; position: absolute; left: 0px; top: 20px;">год должен быть в 4-значном формате,<br>месяц и день - в двухзначном (например, 2000/01/01),<br>часы и минуты вводятся в двухзначном формате от 0 до 23<br>для часов и от 0 до 59 для минут (например, 00:59)</div></div>
 </BODY>
 </HTML>

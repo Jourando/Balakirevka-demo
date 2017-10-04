@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<Title>18</Title>
+</HEAD>
+<BODY>
+<div>Календарь</div>
+<script>
+function calendar() {
+	var d = new Date();
+	var year = d.getFullYear();
+	var month = d.getUTCMonth();
+	var today = d.getDate();
+	var first_day = new Date(year,month,1);
+	var first_wday = first_day.getDay();
+	var oneHour = 1000 * 60 * 60; // милисекунды * минуты * часы
+	var oneDay = oneHour * 24; // сутки
+	var nextMonth = new Date(year, month + 1, 1);
+	var last_date = Math.ceil((nextMonth.getTime() - first_day.getTime() - oneHour)/oneDay);
+	var n = new Array ("Январь","Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь");
+	var body = document.getElementsByTagName("body")[0];
+	var day_table = document.createElement("table");
+	day_table.id = "Calendar";
+	day_table.style.borderStyle = "dotted";
+	day_table.style.fontFamily = "sans-serif";
+	day_table.bgColor = "antiquewhite";
+	body.appendChild(day_table);
+  
+	day_table.innerHTML = "<tr><td colspan=7 rowspan=1 id='month'>"+n[month]+"</td></tr>"+
+	"<tr id='weekday'><td>пн</td><td>вт</td><td>ср</td><td>чт</td><td>пт</td><td>сб</td><td>вс</td></tr>"+
+	"<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>"+
+	"<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>"+
+	"<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>"+
+	"<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>"+
+	"<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+  
+	for (i=1;i < last_date;i++) {
+		var td_d = document.getElementsByTagName("td");
+		if (i == first_wday) {
+			td_d[0].innerHTML = n[month];
+			td_d[0].bgColor = "ffcccc";
+			td_d[0].align = "center";
+			td_d[0].style.fontFamily = "arial black";
+			td_d[7+i].innerHTML=1;
+          			  
+			for (j=0;j<last_date;j++)
+				td_d[7+i+j].innerHTML = 1+j;
+        
+			for (c=8;c<43;c++)
+				if (td_d[c].innerHTML==0) {
+					td_d[c].visibility = "hidden";
+				} else td_d[c].bgColor = "white";
+                        
+			for (z=0;z<last_date;z++)
+				if (td_d[z].innerHTML == today) {
+					td_d[z].bgColor = "salmon";
+				}
+		}
+	}
+}
+</script>
+<input type=button onclick=calendar();>
+</BODY>
+</HTML>

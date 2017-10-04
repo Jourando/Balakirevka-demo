@@ -2,7 +2,6 @@
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title>Auto-size TextArea Demo</title>
-<!-- <script type="text/javascript" src="/js/prototype/prototype.js"></script> -->
 <script>
 function resizeArea(text_id, minHeight, maxHeight)
 {
@@ -50,4 +49,5 @@ body, textarea {
        <div class="comment_text_hidden"><div class="textarea_behavior" id="comment_text_hidden"></div></div>
        <textarea class="textarea_behavior" rows="3" id="comment_text" onkeyup="resizeArea('comment_text', 45, 450);"></textarea>
 </div>
+<p><input type=button value=Clear Onclick="document.getElementById('comment_text').value=''; resizeArea('comment_text', 45, 450);"></p>
 </body></html>

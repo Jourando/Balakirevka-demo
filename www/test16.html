@@ -386,7 +386,7 @@ for (i=0; i<a.length; i++) {
 		}
 		if ((parseInt(a[5]+''+a[6]) < 1) || (parseInt(a[5]+''+a[6])>12)) {b=substr(b, 0, -1);}
 	}
-	if (i==8) { // любая цифра
+	if (i==8) {
 		if (isDigit(a[i], 2, '')) {b=b+a[i];}
 		else {b=b+'';}
 	}
@@ -435,6 +435,6 @@ else {document.getElementById('validfrm3').style.cssText="background-color: rgba
 }
 </script>
 <br>
-<div style="position: relative;">4. <input type=text id=validfrm3 value="" name=datetime4 placeholder="2000/01/01 12:00" OnFocus="this.nextSibling.style.display='block'; clrInput6(this.value)" OnBlur="this.nextSibling.style.display='none'; clrInput5(this.value)" Onchange="rply(this.value)" OnKeyUp="rply(this.value)" maxlength=16><div style="padding: 0 10px; background: #f99; display: none; position: absolute; left: 0px; top: 20px;">год должен быть в 4-значном формате,<br>месяц и день - в двухзначном (например, 2000/01/01),<br>часы и минуты вводятся в двухзначном формате от 0 до 23<br>для часов и от 0 до 59 для минут (например, 00:59)</div></div>
+<div style="position: relative;">4. <input type=text id=validfrm3 value="" name=datetime4 placeholder="2000/01/01 12:00" OnFocus="this.nextSibling.style.display='block'; clrInput6(this.value)" OnBlur="this.nextSibling.style.display='none'; clrInput5(this.value)" Onchange="rply(this.value)" OnKeyUp="rply(this.value)" maxlength=16><div style="padding: 0 10px; background: #f99; display: none; position: absolute; left: 0px; top: 20px;">год должен быть в 4-значном формате, от 1990 до 2090<br>месяц и день - в двухзначном (например, 2000/01/01),<br>часы и минуты вводятся в двухзначном формате от 0 до 23 для часов<br>и от 0 до 59 для минут (например, 00:59)</div></div>
 </BODY>
 </HTML>

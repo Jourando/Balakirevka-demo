@@ -90,7 +90,7 @@ function toolTip(msg) {
 <script src="l/imask.min.js"></script>
 <script src="l/moment_locales.js"></script>
 <h4>Тест подсказок</h4>
-<div class=valform-item>1. <input type=text name=datetime1 value="2000/01/01 12:00" onMouseOver="toolTip(Str1)" onMouseOut="toolTip()" placeholder="2000/01/31 12:00" id="moment-mask"></div>
+<div class=valform-item>1. <input type=text name=datetime1 value="" onMouseOver="toolTip(Str1)" onMouseOut="toolTip()" placeholder="2000/01/31 12:00" id="moment-mask"></div>
 <div id="floatTip" style="display: none"></div>
 <script>
 var element = document.getElementById('moment-mask');
@@ -122,10 +122,10 @@ var momentMask = new IMask(element, {
 <!-- Вар.2 -->
 <script>
 function clrInput1(p) {
-if (p.trim()=='') {document.getElementById('validfrm1').value='2000/01/31 12:00';}
+if (p.trim()=='') {document.getElementById('validfrm1').value='2000/01/01 12:00';}
 }
 function clrInput2(p) {
-if (p.trim()=='2000/01/31 12:00') {document.getElementById('validfrm1').value='';}
+if (p.trim()=='2000/01/01 12:00') {document.getElementById('validfrm1').value='';}
 }
 function substr(f_string, f_start, f_length) {
 	if(f_start < 0) {f_start += f_string.length;}
@@ -148,26 +148,26 @@ function isDigit(c, d, e) {
 function rplc(a) {
 var b='';
 for (i=0; i<a.length; i++) {
-	if (i<4) { // анализ 1х четырех символов
+	if (i<4) { 										// анализ 1х четырех символов
 		if (i==0) {
 			if (isDigit(a[i], 0, '')) {b=b+a[i];}	// первый 1 или 2
 			else {b='';}							// иначе сбросить строку
 		} else {
 			if (i==1) {
-				if (isDigit(a[i], 1, a[i-1])) {b=b+a[i];} // если первый символ=1, то 9; если 1 символ=2, то 0
+				if (isDigit(a[i], 1, a[i-1])) {b=b+a[i];} 										// если первый символ=1, то 9; если 1 символ=2, то 0
 				else {b=b+'';}
 			} else {
-				if ((i==2) && ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-'))) { // если 3 символ - разделитель,
-					b='20'+b+'/';															 // то подставить первые символы - 20, а в конце - разделитель /
+				if ((i==2) && ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-'))) {		// если 3 символ - разделитель,
+					b='20'+b+'/';																// то подставить первые символы - 20, а в конце - разделитель /
 				} else {
-					if (isDigit(a[i], 2, '')) {b=b+a[i];}					 // если не разделитель, то проверить, входит ли в 0..9
-					else {b=b+'';}											 // если не входит, то сбросить символ
+					if (isDigit(a[i], 2, '')) {b=b+a[i];}					 					// если не разделитель, то проверить, входит ли в 0..9
+					else {b=b+'';}											 					// если не входит, то сбросить символ
 				}
 			}
 		}
 	}
-	if (i==3) {b=b+'/';}	// если длина строки уже 4 символа, добавить разделитель /
-	if (i==5) {													// 6й символ - месяц
+	if (i==3) {b=b+'/';}							// если длина строки уже 4 символа, добавить разделитель /
+	if (i==5) {										// 6й символ - месяц
 		if (isDigit(a[i], 2, '')) {b=b+a[i];}		// значения от 0 до 9
 		else {b=b+'';}
 	}
@@ -175,13 +175,13 @@ for (i=0; i<a.length; i++) {
 		if ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-')) { b=substr(b, 0, -1)+'0'+a[i-1]+'/'; } // если разделитель, подставить впереди 0, число, а сзади /
 		else {
 			if (a[i-1]==0) {
-				if (a[i]>0) { 												  // если первая цифра 0, вторая должна быть > 0
-					if (isDigit(a[i], 2, '')) {b=b+a[i]+'/';} // если впереди 0, принимаем любую цифру и сзади добавляем /
+				if (a[i]>0) { 									// если первая цифра 0, вторая должна быть > 0
+					if (isDigit(a[i], 2, '')) {b=b+a[i]+'/';}	// если впереди 0, принимаем любую цифру и сзади добавляем /
 					else {b=b+'';}
 				} else {b=b+'';}
 			}
 			if (a[i-1]==1) {
-				if (isDigit(a[i], 4, '')) {b=b+a[i]+'/';} // если впереди 1, принимаем 0..2 и сзади добавляем /
+				if (isDigit(a[i], 4, '')) {b=b+a[i]+'/';}		// если впереди 1, принимаем 0..2 и сзади добавляем /
 				else {b=b+'';}
 			}
 		}
@@ -232,13 +232,13 @@ for (i=0; i<a.length; i++) {
 }
 document.getElementById('validfrm1').value=b;
 if (i==16) {document.getElementById('validfrm1').style.cssText="background-color: rgba(0, 200, 0, 0.5)";}
+else {document.getElementById('validfrm1').style.cssText="background-color: rgba(235, 235, 255, 0.5)";}
 }
 function efnc() {
 return true;
 }
-// осталось добавить время
 </script>
-<div class="inpdt1" data-title="Подсказка для заполнения: год должен быть в 4-значном формате, месяц и день - в двухзначном (например, 2000/01/01), часы и минуты вводятся в двухзначном формате от 0 до 23 для часов и от 0 до 59 для минут (например, 00:59)">2. <input type=text value="2000/01/01 12:00" name=datetime2></div>
+<div class="inpx">2. <input type=text id=validfrm1 value="2000/01/01 12:00" name=datetime2 onMouseOver="toolTip(Str1)" onMouseOut="toolTip()" placeholder="2000/01/01 12:00" OnFocus="clrInput2(this.value)" OnBlur="clrInput1(this.value)" Onchange=rplc(this.value) OnKeyUp=rplc(this.value)></div>
 <br><p></p><br>
 <div class="inpdt2" data-title="Подсказка для заполнения: год должен быть в 4-значном формате, месяц и день - в двухзначном (например, 2000/01/01), часы и минуты вводятся в двухзначном формате от 0 до 23 для часов и от 0 до 59 для минут (например, 00:59)">3. <input type=text value="2000/01/01 12:00" name=datetime3></div>
 <br><p></p><br>

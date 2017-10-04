@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<HTML><HEAD>
+<TITLE>Test page - 16. Ввод даты+времени и Тест подсказок.</TITLE>
+<Meta charset="utf-8">
+<style>
+	input[type=text] {width: 180px;}
+   #floatTip {
+    position: absolute; z-index: 3; width: 250px; display: none; 
+    border: 1px solid #000; padding: 4px;
+    font-family: sans-serif; font-size: 9pt;
+    color: #333; background: #ffe5ff;
+   }
+   .inpdt1, .inpdt2 {
+    display: inline-block; /* Строчно-блочный элемент */
+    position: relative; /* Относительное позиционирование */
+   }
+   .inpdt1:hover::after {
+    content: attr(data-title); /* Выводим текст */
+    position: absolute; /* Абсолютное позиционирование */
+    left: 0; right: 0; bottom: 20px; /* Положение подсказки */
+    z-index: 1; /* Отображаем подсказку поверх других элементов */
+    background: rgba(0,42,167,0.6); /* Полупрозрачный цвет фона */
+    color: #fff; /* Цвет текста */
+    text-align: center; /* Выравнивание текста по центру */
+    font-family: Arial, sans-serif; /* Гарнитура шрифта */
+    font-size: 10px; /* Размер текста подсказки */
+    padding: 5px 10px; /* Поля */
+    border: 1px solid #333; /* Параметры рамки */
+   }
+   .inpdt2:hover::after {
+    content: attr(data-title); /* Выводим текст */
+    position: absolute; /* Абсолютное позиционирование */
+    left: 0; right: 0; bottom: 20px; /* Положение подсказки */
+    z-index: 1; /* Отображаем подсказку поверх других элементов */
+    background: rgb(0,42,167); /* Непрозрачный цвет фона */
+    color: #fff; /* Цвет текста */
+    text-align: center; /* Выравнивание текста по центру */
+    font-family: Arial, sans-serif; /* Гарнитура шрифта */
+    font-size: 10px; /* Размер текста подсказки */
+    padding: 5px 10px; /* Поля */
+    border: 1px solid #333; /* Параметры рамки */
+   }
+</style>
+<script>
+var Str1="Поле поддерживает ввод даты и времени в следующем формате:<ul><li>4-значный ввод года в диапазоне от 1990 до 2090</li><li>2-значный ввод месяца (если требуется ввести 2 месяц, то значение должно быть 02)</li><li>2-значный ввод числа (если требуется ввести 1 число, значение должно быть 01)</li><li>Дата от времени отделяется пробелом</li><li>2-значный ввод часов в диапазоне от 0 до 23</li><li>Двухзначный ввод минут в диапазоне от 0 до 59</li><li>Дата разделяется косой чертой - /, время - двоеточием. Например, 2000/01/01 12:01</li></ul>";
+document.onmousemove = moveTip;
+function moveTip(e) {
+  floatTipStyle = document.getElementById("floatTip").style;
+  w = 250; // Ширина подсказки
+
+  // Для браузера IE6-8
+  if (document.all)  { 
+    x = event.clientX + document.body.scrollLeft; 
+    y = event.clientY + document.body.scrollTop; 
+
+  // Для остальных браузеров
+  } else   { 
+    x = e.pageX; // Координата X курсора
+    y = e.pageY; // Координата Y курсора
+  }
+
+  // Показывать слой справа от курсора 
+  if ((x + w + 10) < document.body.clientWidth) { 
+    floatTipStyle.left = x + 'px';
+
+  // Показывать слой слева от курсора
+  } else { 
+    floatTipStyle.left = x - w + 'px';
+  }
+
+  // Положение от  верхнего края окна браузера
+  floatTipStyle.top = y + 20 + 'px';
+}
+
+function toolTip(msg) {
+  floatTipStyle = document.getElementById("floatTip").style;
+  if (msg) {
+    // Выводим текст подсказки
+    document.getElementById("floatTip").innerHTML = msg;
+    // Показываем подсказку
+    floatTipStyle.display = "block";
+  } else { 
+    // Прячем подсказку
+    floatTipStyle.display = "none";
+  } 
+}
+</Script>
+</HEAD>
+<BODY>
+<script src="l/imask.min.js"></script>
+<script src="l/moment_locales.js"></script>
+<h4>Тест подсказок</h4>
+<div class=valform-item>1. <input type=text name=datetime1 value="2000/01/01 12:00" onMouseOver="toolTip(Str1)" onMouseOut="toolTip()" placeholder="2000/01/31 12:00" id="moment-mask"></div>
+<div id="floatTip" style="display: none"></div>
+<script>
+var element = document.getElementById('moment-mask');
+var momentFormat = 'YYYY/MM/DD HH:mm';
+var momentMask = new IMask(element, {
+  mask: Date,
+  pattern: momentFormat,
+  placeholder: {lazy: false},
+  min: new Date(1970, 0, 1),
+  max: new Date(2070, 0, 1),
+
+  format: function (date) {
+    return moment(date).format(momentFormat);
+  },
+  parse: function (str) {
+    return moment(str, momentFormat);
+  },
+
+  groups: {
+    YYYY: new IMask.MaskedPattern.Group.Range([1970, 2030]),
+    MM: new IMask.MaskedPattern.Group.Range([1, 12]),
+    DD: new IMask.MaskedPattern.Group.Range([1, 31]),
+    HH: new IMask.MaskedPattern.Group.Range([0, 23]),
+    mm: new IMask.MaskedPattern.Group.Range([0, 59])
+  }
+});
+</script>
+<br>
+<!-- Вар.2 -->
+<div class="inpdt1" data-title="Подсказка для заполнения: год должен быть в 4-значном формате, месяц и день - в двухзначном (например, 2000/01/01), часы и минуты вводятся в двухзначном формате от 0 до 23 для часов и от 0 до 59 для минут (например, 00:59)">2. <input type=text value="2000/01/01 12:00" name=datetime2></div>
+<br><p></p><br>
+<div class="inpdt2" data-title="Подсказка для заполнения: год должен быть в 4-значном формате, месяц и день - в двухзначном (например, 2000/01/01), часы и минуты вводятся в двухзначном формате от 0 до 23 для часов и от 0 до 59 для минут (например, 00:59)">3. <input type=text value="2000/01/01 12:00" name=datetime3></div>
+<br><p></p><br>
+<div style="position: relative;">4. <input type=text value="2000/01/01 12:00" onfocus="this.nextSibling.style.display = 'block';" onblur="this.nextSibling.style.display = 'none';"><div style="padding: 0 10px; background: #f99; display: none; position: absolute; left: 0px; top: 20px;">год должен быть в 4-значном формате,<br>месяц и день - в двухзначном (например, 2000/01/01),<br>часы и минуты вводятся в двухзначном формате от 0 до 23<br>для часов и от 0 до 59 для минут (например, 00:59)</div></div>
+<br><p></p><br>
+<div><input type=text value="2000/01/01 12:00" OnMouseOver="document.getElementById('hlpmsg').innerHTML='год должен быть в 4-значном формате, месяц и день - в двухзначном (например, 2000/01/01), часы и минуты вводятся в двухзначном формате от 0 до 23 для часов и от 0 до 59 для минут (например, 00:59)';" OnMouseOut="document.getElementById('hlpmsg').innerHTML='Help:';"><br><div id=hlpmsg>Help:</div></div>
+</BODY>
+</HTML>

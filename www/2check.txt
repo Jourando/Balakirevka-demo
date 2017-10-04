@@ -1,2 +1,0 @@
-https://ruseller.com/lessons.php?id=2043&rub=32 - поствалидация времени/даты
-https://learn.javascript.ru/datetime - JS doc по datetime

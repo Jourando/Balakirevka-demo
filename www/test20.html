@@ -10,10 +10,10 @@ function resizeArea(text_id, minHeight, maxHeight)
    // var area_hidden = $(text_id + "_hidden");
    var area_hidden = document.getElementById(text_id+'_hidden');
    var text = '';
-   var strs=area.value.replace(/[<>]/g, '_').split("\n");
+   var strs = new Array();
+   strs=area.value.replace(/[<>]/g, '_').split("\n");
    for (i=0; i<strs.length; i++) {
-	alert(i);
-   // .each(function(s){text = text + '<div>' + s.replace(/\s\s/g, ' &nbsp;') + '&nbsp;</div>'+"\n";});
+		text = text + '<div>' + strs[i].replace(/\s\s/g, ' &nbsp;') + '&nbsp;</div>'+"\n";
    }
    area_hidden.innerHTML = text;
    var height = area_hidden.offsetHeight + 15;

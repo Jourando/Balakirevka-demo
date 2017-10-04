@@ -119,10 +119,7 @@ for (i=0; i<a.length; i++) {
 	}
 	if (i==8) { // любая цифра
 		if (isDigit(a[i], 2, '')) {b=b+a[i]; console.log(b);}
-		else {
-			if ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-')) { b=substr(b, 0, -1)+'0'+a[i-1]; } // если разделитель, подставить впереди 0, число
-			else {b=b+''; console.log(b);}
-		}
+		else {b=b+''; console.log(b);}
 	}
 	if (i==9) { // если равно нулю, то разрешить только число, кроме 0! если больше нуля, то разрешить любое число... но сумма символов < 31, разрешить разделитель...
 		if (a[i-1]==0) {
@@ -130,7 +127,10 @@ for (i=0; i<a.length; i++) {
 			else {b=b+'';}
 		} else {
 			if (isDigit(a[i], 2, '')) {b=b+a[i]; }
-			else {b=b+'';}
+			else {
+				if ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-')) {b=substr(b, 0, -1)+'0'+a[i-1];} // если разделитель, подставить впереди 0, число
+				else {b=b+'';}
+			}
 		}
 		if ((parseInt(a[8]+''+a[9]) < 1) || (parseInt(a[8]+''+a[9])>31)) {b=substr(b, 0, -1);}
 	}
@@ -153,11 +153,15 @@ for (i=0; i<a.length; i++) {
 	}
 	if (i==15) {
 		if (isDigit(a[i], 2, '')) {b=b+a[i]; console.log(b);} // принимаем любую цифру/
-		else {b=b+''; console.log(b);}
+		else {
+			if ((a[i]=='/') || (a[i]=='.') || (a[i]==':') || (a[i]=='-')) {b=substr(b, 0, -1)+'0'+a[i-1];} // если разделитель, подставить впереди 0, число
+			else {b=b+''; console.log(b);}
+		}
 		if ((parseInt(a[14]+''+a[15]) < 0) || (parseInt(a[14]+''+a[15])>59)) {b=substr(b, 0, -2); console.log(a[14]+''+a[15])} // 0..59
 	}
 }
 document.getElementById('validfrm1').value=b;
+if (i==16) {document.getElementById('validfrm1').style.cssText="background-color: rgba(0, 200, 0, 0.5)";}
 }
 function efnc() {
 return true;

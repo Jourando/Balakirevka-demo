@@ -36,9 +36,34 @@ td.norm, td.today, td.holiday {cursor: pointer;}
 function getIt(a) {
 console.log(a)
 }
+function toNx(eA, eB) {
+var tmpStrX=''+eA;
+// for (i=1; i<eB; i++) {
+//	if ((tmpStrX+eA).length < eB) {tmpStrX=tmpStrX+'0'}
+//	else {tmpStrX=tmpStrX+eA;}
+// }
+while (tmpStrX.length<eB) {
+	tmpStrX='0'+tmpStrX;
+}
+return tmpStrX;
+}
 function selectedDT(a) {
  // установить текущую дату в результирующее поле
  // Год взять из ThisY и дополнить 4-значным, мес - из ThisM и дополнить 2-значным, число - из innerHTML и дополнить 2-значным.
+ var YY=toNx(document.getElementById('ThisY').value, 4);
+ var MM=toNx(document.getElementById('ThisM').selectedIndex, 2);
+ var DD=toNx(a, 2);
+ console.log(YY);
+ console.log(MM);
+ console.log(DD);
+ console.log(document.getElementById('ThisY').value+' 1!');
+ var XX=document.getElementsByTagName('select')[0].id;
+ var YY=document.getElementsByTagName('select')[0].value;
+ console.log(XX+' -- id');
+ console.log(YY+' -- val');
+ for (i=0; i<12; i++) {
+	if (document.getElementsByTagName('option')[i].selected) {console.log(document.getElementsByTagName('option')[i].value+' -- selected');}
+ }
 }
 </script>
 <table border=0>
@@ -58,7 +83,7 @@ function selectedDT(a) {
 <option value="9">Октябрь</option>
 <option value="10">Ноябрь</option>
 <option value="11">Декабрь</option>
-</select><td colspan="3"><input id=ThisY type="number" value="" min="0" max="9999" size="4">
+</select><td colspan="3"><input id=ThisY type="number" value="" min="1990" max="2090" size="4">
     <tr><td width=40px>Пн<td width=40px>Вт<td width=40px>Ср<td width=40px>Чт<td width=40px>Пт<td width=40px>Сб<td width=40px>Вс
 	<tr><td colspan=7><hr>
   <tbody>
@@ -213,7 +238,6 @@ function displayCanvas(){
 <div style="text-align: center; position: relative; z-index: 10; left: 0; right: 0; bottom: 5px; background: rgba(235, 235, 255, 0.5);"><input type="number" value="0" min="0" max="23" size="2" style="width: 45px;"> : <input type="number" value="0" min="0" max="59" size="2" style="width: 45px;"></div></td></tr>
 </Table>
 <script>
-// document.getElementById('xtimer1').style.height=document.getElementById('calendar3').offsetHeight;
 window.setInterval(
 	function(){
 	    var d = new Date();
@@ -224,7 +248,7 @@ window.setInterval(
 </script>
 </td>
 </tr><tr>
-<td colspan=2>Выбранное значение: <input type=text id=curDTx value="0000/00/00 00:00" readonly>&nbsp;<div style="display: inline-block; border: 1px solid #000; text-align: center; width: 60px; background: #999; color: #eee; cursor: pointer">OK</div></td>
+<td colspan=2>Выбранное значение: <input type=text id=curDTx value="0000/00/00 00:00" readonly>&nbsp;&nbsp;&nbsp;<div style="display: inline-block; border: 1px solid #000; text-align: center; width: 60px; background: #999; color: #eee; cursor: pointer">OK</div>&nbsp;<div style="display: inline-block; border: 1px solid #000; text-align: center; width: 60px; background: #999; color: #eee; cursor: pointer">Cancel</div></td>
 </tr>
 </TABLE>
 </BODY>

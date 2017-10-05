@@ -49,21 +49,14 @@ function selectedDT(a, b) {
  var YY=toNx(document.getElementById('ThisY').value, 4);
  var MM=toNx(document.getElementById('ThisM').selectedIndex, 2);
  var DD;
- el=document.getElementById('calendar3');
- els=el.getElementsByTagName('td');
- console.log(els.length);
+ els=document.getElementById('calendar3').getElementsByTagName('td');
  for (i=0; i<els.length; i++) {
-	if (els[i].className=='today') {console.log('found: '+els[i].innerHTML);}
-	else {console.log(els[i].className);}
+	if (els[i].className=='today') {DD=toNx(els[i].innerHTML, 2); break;}
+	else {DD='00';}
  }
-// if (b==1) {DD=toNx(document.getElementById('savedDay').value);}
-//  else {DD=toNx(a, 2);}
  console.log(YY);
  console.log(MM);
  console.log(DD);
-// console.log(document.getElementById('ThisY').value+' 1!');
-// var XX=document.getElementsByTagName('select')[0].id;
-// var YY=document.getElementsByTagName('select')[0].value;
 // console.log(XX+' -- id');
 // console.log(YY+' -- val');
  for (i=0; i<12; i++) {

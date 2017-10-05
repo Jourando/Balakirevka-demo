@@ -1,4 +1,4 @@
-<HTML><HEAD>
+﻿<HTML><HEAD>
 <TITLE>test19</TITLE>
 <meta charset="utf-8">
 <style>
@@ -25,7 +25,14 @@
 </style>
 </HEAD>
 <BODY>
-<table id="calendar3" style="width: 310px; border: 1px solid #333">
+<script>
+function getIt(a) {
+console.log(a)
+}
+</script>
+<table border=0>
+<tr><td>
+<table id="calendar3" style="width: 290px; border: 1px solid #333">
   <thead>
     <tr><td colspan="4"><select>
 <option value="0">Январь</option>
@@ -44,7 +51,6 @@
     <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
   <tbody>
 </table>
-
 <script>
 function Calendar3(id, year, month) {
 var Dlast = new Date(year,month+1,0).getDate(),
@@ -61,7 +67,7 @@ if (DNfirst != 0) {
 }
 for(var  i = 1; i <= Dlast; i++) {
   if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
-    calendar += '<td class="today">' + i;
+    calendar += '<td class="today" onclick=getIt(this.innerHTML)>' + i;
   }else{
     if (  // список официальных праздников
         (i == 1 && D.getMonth() == 0 && ((D.getFullYear() > 1897 && D.getFullYear() < 1930) || D.getFullYear() > 1947)) || // Новый год
@@ -77,9 +83,9 @@ for(var  i = 1; i <= Dlast; i++) {
         (i == 8 && D.getMonth() == 10 && (D.getFullYear() > 1926 && D.getFullYear() < 1992)) || // Октябрьская революция 1917 года
         (i == 4 && D.getMonth() == 10 && D.getFullYear() > 2004) // День народного единства, который заменил Октябрьскую революцию 1917 года
        ) {
-      calendar += '<td class="holiday">' + i;
+      calendar += '<td class="holiday" onclick=getIt(this.innerHTML)>' + i;
     }else{
-      calendar += '<td>' + i;
+      calendar += '<td onclick=getIt(this.innerHTML)>' + i;
     }
   }
   if (new Date(D.getFullYear(),D.getMonth(),i).getDay() == 0) {
@@ -100,5 +106,16 @@ document.querySelector('#calendar3').onchange = function Kalendar3() {
   Calendar3("calendar3",document.querySelector('#calendar3 input').value,parseFloat(document.querySelector('#calendar3 select').options[document.querySelector('#calendar3 select').selectedIndex].value));
 }
 </script>
+</td><td>
+<Table id="xtimer1" style="width: 140px; border: 1px solid #333" >
+<tr><td><h4>time</h4>
+<input type="number" value="0" min="0" max="23" size="2" style="width: 45px;"> : <input type="number" value="0" min="0" max="59" size="2" style="width: 45px;"></td></tr>
+</Table>
+<script>
+document.getElementById('xtimer1').style.height=document.getElementById('calendar3').offsetHeight;
+</script>
+</td>
+</tr>
+</TABLE>
 </BODY>
 </HTML>

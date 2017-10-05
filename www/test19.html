@@ -43,7 +43,7 @@ return tmpStrX;
 function selectedDT(a, b) {
  // режим 1 - установить текущую дату в результирующее поле
 var YY=toNx(document.getElementById('ThisY').value, 4);
-var MM
+var MM;
 if (b==3) {MM=toNx(a, 2);} // switch month
 else {MM=toNx(document.getElementById('ThisM').selectedIndex+1, 2);}
 var DD;
@@ -62,7 +62,8 @@ if (b==1) { // current day
 els=document.getElementById('mTime').getElementsByTagName('input');
 var hh=toNx(els[0].value, 2);
 var mn=toNx(els[1].value, 2);
- console.log(YY+'/'+MM+'/'+DD+' '+hh+':'+mn);
+console.log(YY+'/'+MM+'/'+DD+' '+hh+':'+mn);
+document.getElementById('curDTx').value=YY+'/'+MM+'/'+DD+' '+hh+':'+mn;
 }
 </script>
 <table border=0>
@@ -83,7 +84,7 @@ var mn=toNx(els[1].value, 2);
 <option value="9">Октябрь</option>
 <option value="10">Ноябрь</option>
 <option value="11">Декабрь</option>
-</select><td colspan="3"><input id=ThisY type="number" value="" min="1990" max="2090" size="4">
+</select><td colspan="3"><input id=ThisY type="number" value="" min="1990" max="2090" size="4" OnChange="selectedDT('', 4);">
 <tr><td width=40px>Пн<td width=40px>Вт<td width=40px>Ср<td width=40px>Чт<td width=40px>Пт<td width=40px>Сб<td width=40px>Вс
 <tr><td colspan=7><hr>
 	</thead>
@@ -228,7 +229,7 @@ function displayCanvas(){
 	<!-- <label>Текущее время:<br><input type=radio name=gr1 value=analog checked>аналоговый вид<br><input type=radio name=gr1 value=digit>цифровой вид</label> -->
 	<div id='clock' style="display: none">Текущее время</div>
 	<canvas height='180' width='180' id='myCanvas' style="mardin: 0px; padding: 0px;"></canvas>
-<div id=mTime style="text-align: center; position: relative; z-index: 10; left: 0; right: 0; bottom: 5px; background: rgba(235, 235, 255, 0.5);"><input type="number" value="0" min="0" max="23" size="2" style="width: 45px;"> : <input type="number" value="0" min="0" max="59" size="2" style="width: 45px;"></div></td></tr>
+<div id=mTime style="text-align: center; position: relative; z-index: 10; left: 0; right: 0; bottom: 5px; background: rgba(235, 235, 255, 0.5);"><input type="number" value="0" min="0" max="23" size="2" style="width: 45px;" OnChange="selectedDT('', 4);"> : <input type="number" value="0" min="0" max="59" size="2" style="width: 45px;" OnChange="selectedDT('', 4);"></div></td></tr>
 </Table>
 </td>
 </tr><tr>

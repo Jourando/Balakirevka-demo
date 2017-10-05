@@ -46,24 +46,32 @@ return tmpStrX;
 function selectedDT(a, b) {
  // установить текущую дату в результирующее поле
  // Год взять из ThisY и дополнить 4-значным, мес - из ThisM и дополнить 2-значным, число - из innerHTML и дополнить 2-значным.
- var YY=toNx(document.getElementById('ThisY').value, 4);
- var MM=toNx(document.getElementById('ThisM').selectedIndex, 2);
- var DD;
- els=document.getElementById('calendar3').getElementsByTagName('td');
- for (i=0; i<els.length; i++) {
-	if (els[i].className=='today') {DD=toNx(els[i].innerHTML, 2); break;}
-	else {DD='00';}
- }
+var YY=toNx(document.getElementById('ThisY').value, 4);
+var MM=toNx(document.getElementById('ThisM').selectedIndex, 2);
+var DD;
+if (b==1) {
+	var els=document.getElementById('calendar3').getElementsByTagName('td');
+	for (i=0; i<els.length; i++) {
+		if (els[i].className=='today') {DD=toNx(els[i].innerHTML, 2); break;}
+		else {DD='00';}
+	}
+} else {
+	var DD=toNx(a, 2);
+}
+els=document.getElementById('mTime').getElementsByTagName('input');
+var hh=toNx(els[0].value, 2);
+var mn=toNx(els[1].value, 2);
  console.log(YY);
  console.log(MM);
  console.log(DD);
+ console.log(YY+'/'+MM+'/'+DD+' '+hh+':'+mn);
 }
 </script>
 <table border=0>
 <tr><td>
 <table id="calendar3" style="width: 282px; border: 1px solid #333; height: 210px">
-  <thead>
-    <tr><td colspan="4">
+	<thead>
+<tr><td colspan="4">
 <select id=ThisM>
 <option value="0">Январь</option>
 <option value="1">Февраль</option>
@@ -78,9 +86,10 @@ function selectedDT(a, b) {
 <option value="10">Ноябрь</option>
 <option value="11">Декабрь</option>
 </select><td colspan="3"><input id=ThisY type="number" value="" min="1990" max="2090" size="4">
-    <tr><td width=40px>Пн<td width=40px>Вт<td width=40px>Ср<td width=40px>Чт<td width=40px>Пт<td width=40px>Сб<td width=40px>Вс
-	<tr><td colspan=7><hr>
-  <tbody>
+<tr><td width=40px>Пн<td width=40px>Вт<td width=40px>Ср<td width=40px>Чт<td width=40px>Пт<td width=40px>Сб<td width=40px>Вс
+<tr><td colspan=7><hr>
+	</thead>
+	<tbody>
 </table>
 <script>
 function Calendar3(id, year, month) {
@@ -143,14 +152,14 @@ function displayCanvas(){
     var canvasHTML = document.getElementById('myCanvas');
     var contextHTML = canvasHTML.getContext('2d');
     contextHTML.strokeRect(0,0,canvasHTML.width, canvasHTML.height);
-    //Расчет координат центра и радиуса часов
+	//Расчет координат центра и радиуса часов
     var radiusClock = canvasHTML.width/2 - 10;
     var xCenterClock = canvasHTML.width/2;
     var yCenterClock = canvasHTML.height/2;
-    //Очистка экрана. 
+	//Очистка экрана. 
     contextHTML.fillStyle = "#fff";
     contextHTML.fillRect(0,0,canvasHTML.width,canvasHTML.height);
-    //Рисуем контур часов
+	//Рисуем контур часов
     contextHTML.strokeStyle =  "#000";
     contextHTML.lineWidth = 1;
     contextHTML.beginPath();
@@ -158,7 +167,7 @@ function displayCanvas(){
     contextHTML.moveTo(xCenterClock, yCenterClock);
     contextHTML.stroke();
     contextHTML.closePath();
-    //Рисуем рисочки часов
+	//Рисуем рисочки часов
     var radiusNum = radiusClock - 10; //Радиус расположения рисочек	
     var radiusPoint;
     for(var tm = 0; tm < 60; tm++){
@@ -170,10 +179,10 @@ function displayCanvas(){
 		contextHTML.stroke();
 		contextHTML.closePath();
     }
-    //Оцифровка циферблата часов
+	//Оцифровка циферблата часов
     for(var th = 1; th <= 12; th++){
 		contextHTML.beginPath();
-		contextHTML.font = 'bold 22px sans-serif';
+		contextHTML.font = 'bold 20px sans-serif';
 		var xText = xCenterClock + (radiusNum - 20) * Math.cos(-30*th*(Math.PI/180) + Math.PI/2);
 		var yText = yCenterClock - (radiusNum - 20) * Math.sin(-30*th*(Math.PI/180) + Math.PI/2);
 		if(th <= 9){contextHTML.strokeText(th, xText - 5 , yText + 10);}
@@ -181,7 +190,7 @@ function displayCanvas(){
 		contextHTML.stroke();
 		contextHTML.closePath();	
     }
-    //Рисуем стрелки
+	//Рисуем стрелки
     var lengthSeconds = radiusNum - 10;
     var lengthMinutes = radiusNum - 15;
     var lengthHour = lengthMinutes / 1.5;
@@ -189,7 +198,7 @@ function displayCanvas(){
     var t_sec = 6*d.getSeconds();								//Определяем угол для секунд
     var t_min = 6*(d.getMinutes() + (1/60)*d.getSeconds());		//Определяем угол для минут
     var t_hour = 30*(d.getHours() + (1/60)*d.getMinutes());		//Определяем угол для часов
-    //Рисуем секунды
+	//Рисуем секунды
     contextHTML.beginPath();
     contextHTML.strokeStyle =  "#F00";
     contextHTML.moveTo(xCenterClock, yCenterClock);
@@ -228,7 +237,7 @@ function displayCanvas(){
 	<!-- <label>Текущее время:<br><input type=radio name=gr1 value=analog checked>аналоговый вид<br><input type=radio name=gr1 value=digit>цифровой вид</label> -->
 	<div id='clock' style="display: none">Текущее время</div>
 	<canvas height='180' width='180' id='myCanvas' style="mardin: 0px; padding: 0px;"></canvas>
-<div style="text-align: center; position: relative; z-index: 10; left: 0; right: 0; bottom: 5px; background: rgba(235, 235, 255, 0.5);"><input type="number" value="0" min="0" max="23" size="2" style="width: 45px;"> : <input type="number" value="0" min="0" max="59" size="2" style="width: 45px;"></div></td></tr>
+<div id=mTime style="text-align: center; position: relative; z-index: 10; left: 0; right: 0; bottom: 5px; background: rgba(235, 235, 255, 0.5);"><input type="number" value="0" min="0" max="23" size="2" style="width: 45px;"> : <input type="number" value="0" min="0" max="59" size="2" style="width: 45px;"></div></td></tr>
 </Table>
 <script>
 window.setInterval(

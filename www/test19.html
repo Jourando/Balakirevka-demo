@@ -57,23 +57,13 @@ function selectedDT(a, b) {
  console.log(YY);
  console.log(MM);
  console.log(DD);
-// console.log(XX+' -- id');
-// console.log(YY+' -- val');
- for (i=0; i<12; i++) {
-	if (document.getElementsByTagName('option')[i].selected) {console.log(document.getElementsByTagName('option')[i].value+' -- selected');}
- }
 }
-// function saveDT() {
-// var DT = new Date();
-// document.getElementById('savedDay').value=DT.getDate();
-// }
 </script>
 <table border=0>
 <tr><td>
 <table id="calendar3" style="width: 282px; border: 1px solid #333; height: 210px">
   <thead>
     <tr><td colspan="4">
-<!-- <input type=hidden id=savedDay value="0"> -->
 <select id=ThisM>
 <option value="0">Январь</option>
 <option value="1">Февраль</option>
@@ -109,7 +99,6 @@ if (DNfirst != 0) {
 for(var  i = 1; i <= Dlast; i++) {
   if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
     calendar += '<td class="today" onclick=getIt(this.innerHTML)>' + i;
-	// saveDT();
   }else{
     if (  // список официальных праздников
         (i == 1 && D.getMonth() == 0 && ((D.getFullYear() > 1897 && D.getFullYear() < 1930) || D.getFullYear() > 1947)) || // Новый год

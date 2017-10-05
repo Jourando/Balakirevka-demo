@@ -29,10 +29,31 @@ td.norm, td.today, td.holiday {cursor: pointer;}
   font-weight:bold;
   color:#00c;	
 }
+table {background-color: #fff;}
+#allClock {background: navy; padding: 2px; width: 480px; z-index: 9; position: relative; top: -20px; left: 0;}
+.clockHide {display: none;}
+.clockShow {display: block;}
+.divBtn {display: inline-block; border: 1px solid #000; text-align: center; width: 60px; background: #999; color: #eee; cursor: pointer;}
 </style>
 </HEAD>
 <BODY>
-<div id=allClocks class=everyClock>
+<script>
+function showHint() {
+if (document.getElementById('allClock').className=='clockHide') {document.getElementById('allClock').className='clockShow';}
+else {document.getElementById('allClock').className='clockHide';}
+// document.getElementById('allClock').className='clockShow';
+// console.log('');
+}
+function finx(b) {
+if (b==1) {
+	document.getElementById('inpTxt').value=document.getElementById('curDTx').value;
+}
+showHint();
+}
+</script>
+<div>
+<input type=text name=inpTxt style="width: 200px" Onfocus="showHint()">
+<div id='allClock' class="clockHide">
 <script>
 function toNx(eA, eB) {
 var tmpStrX=''+eA;
@@ -233,7 +254,7 @@ return;
 </Table>
 </td>
 </tr><tr>
-<td colspan=2>Выбранное значение: <input type=text id=curDTx value="0000/00/00 00:00" readonly>&nbsp;&nbsp;&nbsp;<div style="display: inline-block; border: 1px solid #000; text-align: center; width: 60px; background: #999; color: #eee; cursor: pointer">OK</div>&nbsp;<div style="display: inline-block; border: 1px solid #000; text-align: center; width: 60px; background: #999; color: #eee; cursor: pointer">Cancel</div></td>
+<td colspan=2>Выбранное значение: <input type=text id="curDTx" value="0000/00/00 00:00" readonly>&nbsp;&nbsp;&nbsp;<div class=divBtn Onclick="finx(1)">OK</div>&nbsp;<div class=divBtn Onclick="finx(0)">Cancel</div></td>
 </tr>
 </TABLE>
 <input type=hidden id=hdate value=0>
@@ -247,6 +268,8 @@ window.setInterval(
   , 1000);
 selectedDT('', 1);
 </script>
+</div>
+<!-- закрываем input -->
 </div>
 </BODY>
 </HTML>

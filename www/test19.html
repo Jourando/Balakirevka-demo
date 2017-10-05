@@ -22,6 +22,7 @@
 #calendar3 tbody td.today {
   outline: 3px solid red;
 }
+td.norm, td.today, td.holiday {cursor: pointer;}
 #clock{
   font-family:Tahoma, sans-serif;
   font-size:20px;
@@ -38,7 +39,7 @@ console.log(a)
 </script>
 <table border=0>
 <tr><td>
-<table id="calendar3" style="width: 290px; border: 1px solid #333">
+<table id="calendar3" style="width: 282px; border: 1px solid #333; height: 210px">
   <thead>
     <tr><td colspan="4"><select>
 <option value="0">Январь</option>
@@ -54,7 +55,8 @@ console.log(a)
 <option value="10">Ноябрь</option>
 <option value="11">Декабрь</option>
 </select><td colspan="3"><input type="number" value="" min="0" max="9999" size="4">
-    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+    <tr><td width=40px>Пн<td width=40px>Вт<td width=40px>Ср<td width=40px>Чт<td width=40px>Пт<td width=40px>Сб<td width=40px>Вс
+	<tr><td colspan=7><hr>
   <tbody>
 </table>
 <script>
@@ -91,7 +93,7 @@ for(var  i = 1; i <= Dlast; i++) {
        ) {
       calendar += '<td class="holiday" onclick=getIt(this.innerHTML)>' + i;
     }else{
-      calendar += '<td onclick=getIt(this.innerHTML)>' + i;
+      calendar += '<td class="norm" onclick=getIt(this.innerHTML)>' + i;
     }
   }
   if (new Date(D.getFullYear(),D.getMonth(),i).getDay() == 0) {
@@ -216,14 +218,15 @@ function displayCanvas(){
     return;
 }
 </script>
-<Table id="xtimer1" style="width: 140px; border: 1px solid #333" >
-<tr><td><h4>time</h4>
-	 <div id='clock'>Текущее время</div><br>
-	 <canvas height='480' width='480' id='myCanvas'></canvas><br>
-<input type="number" value="0" min="0" max="23" size="2" style="width: 45px;"> : <input type="number" value="0" min="0" max="59" size="2" style="width: 45px;"></td></tr>
+<Table id="xtimer1" style="width: 140px; border: 1px solid #333; height: 210px">
+<tr><td>
+	<!-- <label>Текущее время:<br><input type=radio name=gr1 value=analog checked>аналоговый вид<br><input type=radio name=gr1 value=digit>цифровой вид</label> -->
+	<div id='clock' style="display: none">Текущее время</div>
+	<canvas height='180' width='180' id='myCanvas' style="mardin: 0px; padding: 0px;"></canvas>
+<div style="text-align: center; position: relative; z-index: 10; left: 0; right: 0; bottom: 5px; background: rgba(235, 235, 255, 0.5);"><input type="number" value="0" min="0" max="23" size="2" style="width: 45px;"> : <input type="number" value="0" min="0" max="59" size="2" style="width: 45px;"></div></td></tr>
 </Table>
 <script>
-document.getElementById('xtimer1').style.height=document.getElementById('calendar3').offsetHeight;
+// document.getElementById('xtimer1').style.height=document.getElementById('calendar3').offsetHeight;
 window.setInterval(
 	function(){
 	    var d = new Date();

@@ -38,21 +38,19 @@ table {background-color: #fff;}
 </HEAD>
 <BODY>
 <script>
-function showHint() {
-if (document.getElementById('allClock').className=='clockHide') {document.getElementById('allClock').className='clockShow';}
+function showHint(c) {
+if (document.getElementById('allClock').className=='clockHide') {document.getElementById('allClock').className='clockShow'; document.getElementById('caller').value=c;}
 else {document.getElementById('allClock').className='clockHide';}
-// document.getElementById('allClock').className='clockShow';
-// console.log('');
 }
-function finx(b) {
+function finx(b, c) {
 if (b==1) {
-	document.getElementById('inpTxt').value=document.getElementById('curDTx').value;
+	document.getElementById(c).value=document.getElementById('curDTx').value;
 }
 showHint();
 }
 </script>
 <div>
-<input type=text name=inpTxt style="width: 200px" Onfocus="showHint()">
+<label>Установите дату мероприятия: <input type=text id=inpTxt name=mValux style="width: 200px" Onfocus="showHint('inpTxt')"></label>
 <div id='allClock' class="clockHide">
 <script>
 function toNx(eA, eB) {
@@ -254,10 +252,10 @@ return;
 </Table>
 </td>
 </tr><tr>
-<td colspan=2>Выбранное значение: <input type=text id="curDTx" value="0000/00/00 00:00" readonly>&nbsp;&nbsp;&nbsp;<div class=divBtn Onclick="finx(1)">OK</div>&nbsp;<div class=divBtn Onclick="finx(0)">Cancel</div></td>
+<td colspan=2>Выбранное значение: <input type=text id="curDTx" value="0000/00/00 00:00" readonly>&nbsp;&nbsp;&nbsp;<div class=divBtn Onclick="finx(1, document.getElementById('caller').value)">OK</div>&nbsp;<div class=divBtn Onclick="finx(0, 'caller')">Cancel</div></td>
 </tr>
 </TABLE>
-<input type=hidden id=hdate value=0>
+<input type=hidden id=hdate value="0"><input type=hidden id=caller value="">
 <script>
 window.setInterval(
 	function(){

@@ -38,39 +38,50 @@ console.log(a)
 }
 function toNx(eA, eB) {
 var tmpStrX=''+eA;
-// for (i=1; i<eB; i++) {
-//	if ((tmpStrX+eA).length < eB) {tmpStrX=tmpStrX+'0'}
-//	else {tmpStrX=tmpStrX+eA;}
-// }
 while (tmpStrX.length<eB) {
 	tmpStrX='0'+tmpStrX;
 }
 return tmpStrX;
 }
-function selectedDT(a) {
+function selectedDT(a, b) {
  // установить текущую дату в результирующее поле
  // Год взять из ThisY и дополнить 4-значным, мес - из ThisM и дополнить 2-значным, число - из innerHTML и дополнить 2-значным.
  var YY=toNx(document.getElementById('ThisY').value, 4);
  var MM=toNx(document.getElementById('ThisM').selectedIndex, 2);
- var DD=toNx(a, 2);
+ var DD;
+ el=document.getElementById('calendar3');
+ els=el.getElementsByTagName('td');
+ console.log(els.length);
+ for (i=0; i<els.length; i++) {
+	if (els[i].className=='today') {console.log('found: '+els[i].innerHTML);}
+	else {console.log(els[i].className);}
+ }
+// if (b==1) {DD=toNx(document.getElementById('savedDay').value);}
+//  else {DD=toNx(a, 2);}
  console.log(YY);
  console.log(MM);
  console.log(DD);
- console.log(document.getElementById('ThisY').value+' 1!');
- var XX=document.getElementsByTagName('select')[0].id;
- var YY=document.getElementsByTagName('select')[0].value;
- console.log(XX+' -- id');
- console.log(YY+' -- val');
+// console.log(document.getElementById('ThisY').value+' 1!');
+// var XX=document.getElementsByTagName('select')[0].id;
+// var YY=document.getElementsByTagName('select')[0].value;
+// console.log(XX+' -- id');
+// console.log(YY+' -- val');
  for (i=0; i<12; i++) {
 	if (document.getElementsByTagName('option')[i].selected) {console.log(document.getElementsByTagName('option')[i].value+' -- selected');}
  }
 }
+// function saveDT() {
+// var DT = new Date();
+// document.getElementById('savedDay').value=DT.getDate();
+// }
 </script>
 <table border=0>
 <tr><td>
 <table id="calendar3" style="width: 282px; border: 1px solid #333; height: 210px">
   <thead>
-    <tr><td colspan="4"><select id=ThisM>
+    <tr><td colspan="4">
+<!-- <input type=hidden id=savedDay value="0"> -->
+<select id=ThisM>
 <option value="0">Январь</option>
 <option value="1">Февраль</option>
 <option value="2">Март</option>
@@ -105,7 +116,7 @@ if (DNfirst != 0) {
 for(var  i = 1; i <= Dlast; i++) {
   if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
     calendar += '<td class="today" onclick=getIt(this.innerHTML)>' + i;
-	selectedDT(i);
+	// saveDT();
   }else{
     if (  // список официальных праздников
         (i == 1 && D.getMonth() == 0 && ((D.getFullYear() > 1897 && D.getFullYear() < 1930) || D.getFullYear() > 1947)) || // Новый год
@@ -245,6 +256,7 @@ window.setInterval(
       displayCanvas();
 	}
   , 1000);
+selectedDT('', 1);
 </script>
 </td>
 </tr><tr>

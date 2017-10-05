@@ -50,7 +50,9 @@ showHint();
 }
 </script>
 <div>
-<label>Установите дату мероприятия: <input type=text id=inpTxt name=mValux style="width: 200px" Onfocus="showHint('inpTxt')"></label>
+<!-- продумать сброс полей на дефолт при каждом новом вызове; продумать уничтожение/создание формы, а не просто ее show|hide -->
+<label>Установите дату начала мероприятия: <input type=text id=inpTxt name=mValux style="width: 200px" Onfocus="showHint('inpTxt')"></label><br>
+<label>Установите дату конца мероприятия: <input type=text id=inpTxt2 name=mValux style="width: 200px" Onfocus="showHint('inpTxt2')"></label>
 <div id='allClock' class="clockHide">
 <script>
 function toNx(eA, eB) {

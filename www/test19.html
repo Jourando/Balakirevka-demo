@@ -36,12 +36,16 @@ td.norm, td.today, td.holiday {cursor: pointer;}
 function getIt(a) {
 console.log(a)
 }
+function selectedDT(a) {
+ // установить текущую дату в результирующее поле
+ // Год взять из ThisY и дополнить 4-значным, мес - из ThisM и дополнить 2-значным, число - из innerHTML и дополнить 2-значным.
+}
 </script>
 <table border=0>
 <tr><td>
 <table id="calendar3" style="width: 282px; border: 1px solid #333; height: 210px">
   <thead>
-    <tr><td colspan="4"><select>
+    <tr><td colspan="4"><select id=ThisM>
 <option value="0">Январь</option>
 <option value="1">Февраль</option>
 <option value="2">Март</option>
@@ -54,7 +58,7 @@ console.log(a)
 <option value="9">Октябрь</option>
 <option value="10">Ноябрь</option>
 <option value="11">Декабрь</option>
-</select><td colspan="3"><input type="number" value="" min="0" max="9999" size="4">
+</select><td colspan="3"><input id=ThisY type="number" value="" min="0" max="9999" size="4">
     <tr><td width=40px>Пн<td width=40px>Вт<td width=40px>Ср<td width=40px>Чт<td width=40px>Пт<td width=40px>Сб<td width=40px>Вс
 	<tr><td colspan=7><hr>
   <tbody>
@@ -76,6 +80,7 @@ if (DNfirst != 0) {
 for(var  i = 1; i <= Dlast; i++) {
   if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
     calendar += '<td class="today" onclick=getIt(this.innerHTML)>' + i;
+	selectedDT(i);
   }else{
     if (  // список официальных праздников
         (i == 1 && D.getMonth() == 0 && ((D.getFullYear() > 1897 && D.getFullYear() < 1930) || D.getFullYear() > 1947)) || // Новый год
@@ -90,7 +95,7 @@ for(var  i = 1; i <= Dlast; i++) {
         (i == 7 && D.getMonth() == 10 && (D.getFullYear() > 1926 && D.getFullYear() < 2005)) || // Октябрьская революция 1917 года
         (i == 8 && D.getMonth() == 10 && (D.getFullYear() > 1926 && D.getFullYear() < 1992)) || // Октябрьская революция 1917 года
         (i == 4 && D.getMonth() == 10 && D.getFullYear() > 2004) // День народного единства, который заменил Октябрьскую революцию 1917 года
-       ) {
+       ) { //посмотреть календарь, м б там еще что-то есть из выделяемых дней
       calendar += '<td class="holiday" onclick=getIt(this.innerHTML)>' + i;
     }else{
       calendar += '<td class="norm" onclick=getIt(this.innerHTML)>' + i;
@@ -140,7 +145,7 @@ function displayCanvas(){
     var radiusPoint;
     for(var tm = 0; tm < 60; tm++){
 		contextHTML.beginPath();
-		if(tm % 5 == 0){radiusPoint = 5;}else{radiusPoint = 2;} //для выделения часовых рисочек
+		if(tm % 5 == 0){radiusPoint = 5;}else{radiusPoint = 1;} //для выделения часовых рисочек
 		var xPointM = xCenterClock + radiusNum * Math.cos(-6*tm*(Math.PI/180) + Math.PI/2);
 		var yPointM = yCenterClock - radiusNum * Math.sin(-6*tm*(Math.PI/180) + Math.PI/2);
 		contextHTML.arc(xPointM, yPointM, radiusPoint, 0, 2*Math.PI, true);
@@ -150,9 +155,9 @@ function displayCanvas(){
     //Оцифровка циферблата часов
     for(var th = 1; th <= 12; th++){
 		contextHTML.beginPath();
-		contextHTML.font = 'bold 25px sans-serif';
-		var xText = xCenterClock + (radiusNum - 30) * Math.cos(-30*th*(Math.PI/180) + Math.PI/2);
-		var yText = yCenterClock - (radiusNum - 30) * Math.sin(-30*th*(Math.PI/180) + Math.PI/2);
+		contextHTML.font = 'bold 22px sans-serif';
+		var xText = xCenterClock + (radiusNum - 20) * Math.cos(-30*th*(Math.PI/180) + Math.PI/2);
+		var yText = yCenterClock - (radiusNum - 20) * Math.sin(-30*th*(Math.PI/180) + Math.PI/2);
 		if(th <= 9){contextHTML.strokeText(th, xText - 5 , yText + 10);}
 		else{contextHTML.strokeText(th, xText - 15 , yText + 10);}
 		contextHTML.stroke();
@@ -218,6 +223,8 @@ window.setInterval(
   , 1000);
 </script>
 </td>
+</tr><tr>
+<td colspan=2>Выбранное значение: <input type=text id=curDTx value="0000/00/00 00:00" readonly>&nbsp;<div style="display: inline-block; border: 1px solid #000; text-align: center; width: 60px; background: #999; color: #eee; cursor: pointer">OK</div></td>
 </tr>
 </TABLE>
 </BODY>

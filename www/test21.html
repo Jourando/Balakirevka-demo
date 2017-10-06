@@ -59,11 +59,7 @@ var myBox;
 if (document.getElementById('allClock').className=='clockHide') {
 	document.getElementById('allClock').className='clockShow';
 	document.getElementById('caller').value=c;
-//	console.log(c+': '+'T='+document.getElementById(c).offsetTop+' L='+document.getElementById(c).offsetLeft);
-//	document.getElementById('allClock').offsetTop=document.getElementById(c).offsetTop+'px';
-//	document.getElementById('allClock').offsetLeft=document.getElementById(c).offsetLeft+'px';
 	myBox=getOffset(c);
-	console.log(c+': '+'top='+myBox.top+' left='+myBox.left);
 	document.getElementById('allClock').style.top=myBox.top+'px';
 	document.getElementById('allClock').style.left=myBox.left+'px';
 } else {
@@ -78,10 +74,12 @@ showHint();
 }
 </script>
 <div>
-<!-- продумать сброс полей на дефолт при каждом новом вызове; продумать уничтожение/создание формы, а не просто ее show|hide -->
+<!-- продумать сброс полей на дефолт при каждом новом вызове; продумать уничтожение/создание формы, а не просто ее show|hide 
+	Норм, если для начала/конца мероприятия сохранится значение... убиваем формочку только вместе с modalEdit! -->
 <label>Установите дату начала мероприятия: <input type=text id=inpTxt name=mValux style="width: 200px" Onfocus="showHint('inpTxt')"></label><br>
 <label>Установите дату конца мероприятия: <input type=text id=inpTxt2 name=mValux style="width: 200px" Onfocus="showHint('inpTxt2')"></label>
 <div id='allClock' class="clockHide">
+<div Onclick="finx(0, 'caller')" style="position: absolute; top: 0; right: 0; z-index: 14; width: 20px; height: 20px; border: 1px solid #333; color: #fff; background-color: #900; font-face: Arial; font-size: 18px; padding: 0; margin: 0; text-align: center; cursor: pointer">x</div>
 <script>
 function toNx(eA, eB) {
 var tmpStrX=''+eA;
@@ -298,6 +296,7 @@ window.setInterval(
 	}
   , 1000);
 selectedDT('', 1);
+// этот скрипт в самом-самом конце body
 </script>
 </BODY>
 </HTML>

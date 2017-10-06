@@ -16,7 +16,7 @@
 td.norm, td.today, td.holiday {cursor: pointer;}
 #clock{font-family:Tahoma, sans-serif; font-size:20px; font-weight:bold; color:#00c;}
 table {background-color: #fff;}
-#allClock {background: navy; padding: 2px; width: 480px; z-index: 9; position: relative; top: -20px; left: 0;}
+#allClock {background: navy; padding: 2px; width: 480px; z-index: 9; position: absolute;}
 .clockHide {display: none;}
 .clockShow {display: block;}
 .divBtn {display: inline-block; border: 1px solid #000; text-align: center; width: 60px; background: #999; color: #eee; cursor: pointer;}
@@ -24,9 +24,51 @@ table {background-color: #fff;}
 </HEAD>
 <BODY>
 <script>
+function getOffset(c) {
+var elem=document.getElementById(c);
+if (elem.getBoundingClientRect) {
+		// "правильный" вариант
+		return getOffsetRect(elem);
+} else {
+		// пусть работает хоть как-то
+		return getOffsetSum(elem);
+}
+}
+function getOffsetSum(elem) {
+var top=0, left=0;
+while(elem) {
+top=top+parseInt(elem.offsetTop); left=left+parseInt(elem.offsetLeft);
+elem = elem.offsetParent;
+}
+return {top: top, left: left}
+}
+function getOffsetRect(elem) {
+    var box = elem.getBoundingClientRect();
+    var body = document.body
+    var docElem = document.documentElement
+    var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop
+    var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft
+    var clientTop = docElem.clientTop || body.clientTop || 0
+    var clientLeft = docElem.clientLeft || body.clientLeft || 0
+    var top  = box.top +  scrollTop - clientTop
+    var left = box.left + scrollLeft - clientLeft
+    return { top: Math.round(top), left: Math.round(left) }
+}
 function showHint(c) {
-if (document.getElementById('allClock').className=='clockHide') {document.getElementById('allClock').className='clockShow'; document.getElementById('caller').value=c;}
-else {document.getElementById('allClock').className='clockHide';}
+var myBox;
+if (document.getElementById('allClock').className=='clockHide') {
+	document.getElementById('allClock').className='clockShow';
+	document.getElementById('caller').value=c;
+//	console.log(c+': '+'T='+document.getElementById(c).offsetTop+' L='+document.getElementById(c).offsetLeft);
+//	document.getElementById('allClock').offsetTop=document.getElementById(c).offsetTop+'px';
+//	document.getElementById('allClock').offsetLeft=document.getElementById(c).offsetLeft+'px';
+	myBox=getOffset(c);
+	console.log(c+': '+'top='+myBox.top+' left='+myBox.left);
+	document.getElementById('allClock').style.top=myBox.top+'px';
+	document.getElementById('allClock').style.left=myBox.left+'px';
+} else {
+	document.getElementById('allClock').className='clockHide';
+}
 }
 function finx(b, c) {
 if (b==1) {

@@ -1,4 +1,5 @@
 ﻿<?php
+// demo
 $lines=file('demo.a');
 echo "<HTML lang='RU-ru'><HEAD><meta charset=\"utf-8\"><TITLE>INDEX</TITLE></HEAD><BODY>";
 echo "<Table border=0><tr><td><h4>Файлы с вариантами на выбор</h4></td>";

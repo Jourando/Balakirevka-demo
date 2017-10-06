@@ -9,26 +9,12 @@
   font-size: 15px;
   text-align: center;
 }
-#calendar3 thead tr:last-child {
-  font-size: small;
-  color: rgb(85, 85, 85);
-}
-#calendar3 tbody td {
-  color: rgb(44, 86, 122);
-}
-#calendar3 tbody td:nth-child(n+6), #calendar3 .holiday {
-  color: rgb(231, 140, 92);
-}
-#calendar3 tbody td.today {
-  outline: 3px solid red;
-}
+#calendar3 thead tr:last-child {font-size: small;color: rgb(85, 85, 85);}
+#calendar3 tbody td {color: rgb(44, 86, 122);}
+#calendar3 tbody td:nth-child(n+6), #calendar3 .holiday {color: rgb(231, 140, 92);}
+#calendar3 tbody td.today {outline: 3px solid red;}
 td.norm, td.today, td.holiday {cursor: pointer;}
-#clock{
-  font-family:Tahoma, sans-serif;
-  font-size:20px;
-  font-weight:bold;
-  color:#00c;	
-}
+#clock{font-family:Tahoma, sans-serif; font-size:20px; font-weight:bold; color:#00c;}
 table {background-color: #fff;}
 #allClock {background: navy; padding: 2px; width: 480px; z-index: 9; position: relative; top: -20px; left: 0;}
 .clockHide {display: none;}
@@ -181,7 +167,7 @@ contextHTML.moveTo(xCenterClock, yCenterClock);
 contextHTML.stroke();
 contextHTML.closePath();
 //Рисуем рисочки часов
-var radiusNum = radiusClock - 10; //Радиус расположения рисочек	
+var radiusNum = radiusClock-10; //Радиус расположения рисочек	
 var radiusPoint;
 for(var tm = 0; tm < 60; tm++){
 	contextHTML.beginPath();
@@ -196,46 +182,46 @@ for(var tm = 0; tm < 60; tm++){
 for(var th = 1; th <= 12; th++){
 	contextHTML.beginPath();
 	contextHTML.font = 'bold 20px sans-serif';
-	var xText = xCenterClock + (radiusNum - 20) * Math.cos(-30*th*(Math.PI/180) + Math.PI/2);
-	var yText = yCenterClock - (radiusNum - 20) * Math.sin(-30*th*(Math.PI/180) + Math.PI/2);
-	if(th <= 9){contextHTML.strokeText(th, xText - 5 , yText + 10);}
-	else{contextHTML.strokeText(th, xText - 15 , yText + 10);}
+	var xText = xCenterClock+(radiusNum-20)*Math.cos(-30*th*(Math.PI/180)+Math.PI/2);
+	var yText = yCenterClock-(radiusNum-20)*Math.sin(-30*th*(Math.PI/180)+Math.PI/2);
+	if(th <= 9){contextHTML.strokeText(th, xText-5, yText+10);}
+	else{contextHTML.strokeText(th, xText-15, yText+10);}
 	contextHTML.stroke();
 	contextHTML.closePath();	
 }
 //Рисуем стрелки
-var lengthSeconds = radiusNum - 10;
-var lengthMinutes = radiusNum - 15;
+var lengthSeconds = radiusNum-10;
+var lengthMinutes = radiusNum-15;
 var lengthHour = lengthMinutes / 1.5;
 var d = new Date();											//Получаем экземпляр даты
 var t_sec = 6*d.getSeconds();								//Определяем угол для секунд
-var t_min = 6*(d.getMinutes() + (1/60)*d.getSeconds());		//Определяем угол для минут
-var t_hour = 30*(d.getHours() + (1/60)*d.getMinutes());		//Определяем угол для часов
+var t_min = 6*(d.getMinutes()+(1/60)*d.getSeconds());		//Определяем угол для минут
+var t_hour = 30*(d.getHours()+(1/60)*d.getMinutes());		//Определяем угол для часов
 //Рисуем секунды
 contextHTML.beginPath();
-contextHTML.strokeStyle =  "#F00";
+contextHTML.strokeStyle = "#F00";
 contextHTML.moveTo(xCenterClock, yCenterClock);
-contextHTML.lineTo(xCenterClock + lengthSeconds*Math.cos(Math.PI/2 - t_sec*(Math.PI/180)), yCenterClock - lengthSeconds*Math.sin(Math.PI/2 - t_sec*(Math.PI/180)));
+contextHTML.lineTo(xCenterClock+lengthSeconds*Math.cos(Math.PI/2-t_sec*(Math.PI/180)), yCenterClock-lengthSeconds*Math.sin(Math.PI/2-t_sec*(Math.PI/180)));
 contextHTML.stroke();
 contextHTML.closePath();
 //Рисуем минуты
 contextHTML.beginPath();
-contextHTML.strokeStyle =  "#000";
+contextHTML.strokeStyle = "#000";
 contextHTML.lineWidth = 3;
 contextHTML.moveTo(xCenterClock, yCenterClock);
-contextHTML.lineTo(xCenterClock + lengthMinutes*Math.cos(Math.PI/2 - t_min*(Math.PI/180)), yCenterClock - lengthMinutes*Math.sin(Math.PI/2 - t_min*(Math.PI/180)));
+contextHTML.lineTo(xCenterClock+lengthMinutes*Math.cos(Math.PI/2-t_min*(Math.PI/180)), yCenterClock-lengthMinutes*Math.sin(Math.PI/2-t_min*(Math.PI/180)));
 contextHTML.stroke();
 contextHTML.closePath();
 //Рисуем часы
 contextHTML.beginPath();
 contextHTML.lineWidth = 6;
 contextHTML.moveTo(xCenterClock, yCenterClock);
-contextHTML.lineTo(xCenterClock + lengthHour*Math.cos(Math.PI/2 - t_hour*(Math.PI/180)), yCenterClock - lengthHour*Math.sin(Math.PI/2 - t_hour*(Math.PI/180)));
+contextHTML.lineTo(xCenterClock+lengthHour*Math.cos(Math.PI/2-t_hour*(Math.PI/180)), yCenterClock-lengthHour*Math.sin(Math.PI/2-t_hour*(Math.PI/180)));
 contextHTML.stroke();
 contextHTML.closePath();	
 //Рисуем центр часов
 contextHTML.beginPath();
-contextHTML.strokeStyle =  "#000";
+contextHTML.strokeStyle = "#000";
 contextHTML.fillStyle = "#fff";
 contextHTML.lineWidth = 3;
 contextHTML.arc(xCenterClock, yCenterClock, 5, 0, 2*Math.PI, true);
@@ -258,6 +244,9 @@ return;
 </tr>
 </TABLE>
 <input type=hidden id=hdate value="0"><input type=hidden id=caller value="">
+</div>
+<!-- закрываем input -->
+</div>
 <script>
 window.setInterval(
 	function(){
@@ -268,8 +257,5 @@ window.setInterval(
   , 1000);
 selectedDT('', 1);
 </script>
-</div>
-<!-- закрываем input -->
-</div>
 </BODY>
 </HTML>
